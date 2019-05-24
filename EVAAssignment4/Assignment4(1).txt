@@ -1,0 +1,110 @@
+1) 3x3 Convolutions
+    When we do 3x3 Convolutions it reduces the pixel by 2
+    eg: if we are doing 3x3 Convolutions with 5*5 then the output will be 3x3.
+	
+2) Kernels and how do we decide the number of kernels? 
+	Kernels evaluate the output of our sampling, if we use 10 kernels and out output will be 10 channels
+	Choosing the Kernels are highly depends on the problem or the scenario which we have.
+	
+3) How many layers?
+    Based on the input image size if we are using convolution (3 * 3) the layers vary and 121 layers are the best one.
+    we have to reduce the layers by avoiding unwanted data.
+    for eg:
+      our image size is 400 * 400 if we are doing 3 * 3 then the layers will be 200
+
+4) MaxPooling?
+    To reduce the layers or down sampling we use maxPooling.
+    It takes maximum value within that 2*2 will be the output.
+    Disadvantage of maxPooling is that sometimes we will loose the data which is required also
+    eg:
+      400 * 400 convolving with 3*3
+      400 | 398| 396 |394| 392| 390 maxPooling (390/2)
+      195 |....
+      
+5) Position of MaxPooling
+    MaxPooling should always done after 4 or 5 layers so that the RF atleast have required information
+    we cannot do maxPooling at 2/3 layers before last layer.
+
+6)The distance of MaxPooling from Prediction
+	maxPooling we cannot use in the last layer or before few layers of last layer.
+		
+7) Receptive Field
+    There are two receptive fields one is local receptive field and other one is global receptive field.
+    Local Receptive Field:
+      These are layers before reaching it to last kernal or channel.
+      It has the value of before kernals or image
+	  Pixels are seen just before the layer.
+    Global Receptive Field:
+      The last layer or channel (1*1) which has all the information about the image, it has seen all the pixels or kernals.
+	  Looking at the whole image in the last layer.
+
+	
+8) 1x1 Convolutions
+	1*1 Convolutions will be used to reduce the channel, when we use 1*1 it will evaluate all the before kernals/channels and take the necessary information/values.
+	Based on the situation we can use 1x1 to increase the channels also.
+	
+	 
+9) Batch Normalization
+	Batch Normalization is nothing but normalizing the channel.
+	If we increase the batch size it will take whole channel and normalize the values.
+	It increases the speed and performance that we can see in how much time each epoch is executing.
+	There are four perameters in Batch normalization, 2 are alpha and Beta, batch normalization fixes the mean and variance of each layers.
+
+10) The distance of Batch Normalization from Prediction
+	The batch normalization should done after convolutions, we should not use batch normalization in the last or last before few layers.
+
+11) Concept of Transition Layers
+	it's just a way of downsampling the representations calculated by DenseBlocks slowly upto the end as after transition layers the representations go from 56x56 to 28x28 to 14x14 and so on.
+	Transition layers are used to reduce the complexity.
+	
+12) Position of Transition Layer
+	 After few convolution transition layer can occur, but we can use transition layer in the last layer or few layers before last layer.
+	
+13) Image Normalization
+	Image normalization will changes the range of pixel intensity values.
+	It is used for algorithms to understand better.
+	
+14) DropOut
+	Sometimes our algorithms will learn each and every thing and it will become overfitting.
+	To avoid overfitting we will be using the dropout in the kernel so that it will predict based on the learning it has.
+	DropOut can be used max of 10 percent if we remove more features in dropout then there are chances where it cannot able to predict what it has to predict.
+	
+15) When do we introduce DropOut, or when do we know we have some overfitting
+	Dropout can be introduce after the convolutions.
+	By seeing the output we can understand whether its overfitting or not.
+		eg: if we are doing face recognition and the machine learned each features of the face like eye, nose and if we are sending the image with nose and its predicting as face then its overfitting.
+
+16) When do we stop convolutions and go ahead with a larger kernel or some other alternative
+	When we reach 7 * 7 or 5 * 5 we can stop the convolutions and go ahead with a total kernerl which gives the output of 1 * 1.
+
+17) Softmax
+	Softmax function is normally used in the last layer of NN.
+	Softmax is the function that takes input vector and normalize into probability distribution.
+	Sometimes out vector values could be negative or greater than one, if we apply softmax each component will be the interval of 0 to 1.
+	Softmax can be used based on the scenario, we cannot use softmax if our output should be so accurate.
+
+18) Batch Size, and effects of batch size
+	Batch size is like if we how much size we give it will take that many pictures and train it.
+	Batch size is depends on GPU if the GPU is good we can give higher batch size.
+	
+19) When to add validation checks
+	If we are looking for particular prediction accuracy then we should add validation check in the model fit, because we wont be knowing on which epoch the prediction accuracy will reach to our expected prediction accuracy so that we can stop the epoch in that level.
+
+20) LR schedule and concept behind it
+	Learing rate schedule is used to schedule the learing rate in all the epoch with we initialize
+
+21) Adam vs SGD
+	Adam is an algorithm for gradient based optimization, it perform root mean square propagation and adaptive gradient algorithm which computes individual adaptive learning rates for different parameters.
+	SGD perform computation on small subset, it produces the same performance as regular gradient descent whent he learnign rate is low.
+
+22) Learning Rate
+	Learning rate is used while compiling the model.
+	Some times if we increase the epoch also the accuracy will not increase it will be like stuck, to avoid that we are giving the learing rate to epoch's.	
+
+23) How do we know our network is not going well, comparatively, very early
+	When we are doing model fit with the training data, we should add the validation prediction and in the first epoch if we see the prediction accuracy is very less than what is expected then we know our network is not going well.
+	eg:
+		if we are expecting 99 percent accuracy with the validation data and in first few epochs we got the result around 96 then we can understand our network is not going well.
+	
+24) Number of Epochs and when to increase them
+	In the model fit if we use the epoch 10 and our prediction/accuracy came very near to the expected value then we will increase the epoch size and find the accuracy/prediction.
